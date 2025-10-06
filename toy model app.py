@@ -46,7 +46,7 @@ with st.sidebar.expander("Growth and Lysis Parameters", expanded=False):
 
 with st.sidebar.expander("Antibiotic Parameters", expanded=False):
     K_on = st.number_input("Antibiotic binding rate (K_on)", 0, 10000, 750, 10, on_change=input_changed)
-    K_off = st.number_input("Antibiotic unbinding rate (K_off)", 0.0, 100, 0.01, 0.001, format="%.3f", on_change=input_changed)
+    K_off = st.number_input("Antibiotic unbinding rate (K_off)", 0.0, 100.0, 0.01, 0.001, format="%.3f", on_change=input_changed)
     K_D = st.number_input("Dissociation constant (K_D)", 0, 50000, 12000, 1, on_change=input_changed)
     lambda_max = st.number_input("Maximum Lysis Rate (lambda_max)", 0.1, 10.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
     K_A0 = st.number_input("Initial antibiotic constant (K_A0)", 0, 50, 10, 1, on_change=input_changed)
@@ -234,4 +234,5 @@ if __name__ == "__main__":
 
     for p in plots:
         streamlit_bokeh(p, use_container_width=True, theme="streamlit")
+
 
