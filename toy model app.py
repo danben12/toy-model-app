@@ -39,7 +39,7 @@ def input_changed():
 st.sidebar.header("Model Parameters")
 
 with st.sidebar.expander("Growth and Lysis Parameters", expanded=False):
-    mu_max = st.number_input("Maximum Growth Rate (mu_max)", 0.1, 2.0, 0.7, 0.05, format="%.2f", on_change=input_changed)
+    mu_max = st.number_input("Maximum Growth Rate (mu_max)", 0.0, 2.0, 0.7, 0.05, format="%.2f", on_change=input_changed)
     Y = st.number_input("Yield Coefficient (Y)", 0.0001, 0.5, 0.001, 0.0001, format="%.4f", on_change=input_changed)
     S0 = st.number_input("Initial substrate (S0)", 0.1, 5.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
     Ks = st.number_input("Half-saturation Constant (Ks)", 0.1, 10.0, 2.0, 0.1, format="%.2f", on_change=input_changed)
@@ -234,5 +234,6 @@ if __name__ == "__main__":
 
     for p in plots:
         streamlit_bokeh(p, use_container_width=True, theme="streamlit")
+
 
 
