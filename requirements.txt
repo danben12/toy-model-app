@@ -1,0 +1,7 @@
+streamlit
+streamlit-bokeh
+numpy
+pandas
+matplotlib
+scipy
+bokeh
