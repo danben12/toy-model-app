@@ -40,19 +40,19 @@ st.sidebar.header("Model Parameters")
 
 with st.sidebar.expander("Growth and Lysis Parameters", expanded=False):
     mu_max = st.number_input("Maximum Growth Rate (mu_max)", 0.1, 2.0, 0.7, 0.05, format="%.2f", on_change=input_changed)
-    Y = st.number_input("Yield Coefficient (Y)", 0.0001, 0.01, 0.001, 0.0001, format="%.4f", on_change=input_changed)
+    Y = st.number_input("Yield Coefficient (Y)", 0.0001, 0.5, 0.001, 0.0001, format="%.4f", on_change=input_changed)
     S0 = st.number_input("Initial substrate (S0)", 0.1, 5.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
     Ks = st.number_input("Half-saturation Constant (Ks)", 0.1, 10.0, 2.0, 0.1, format="%.2f", on_change=input_changed)
 
 with st.sidebar.expander("Antibiotic Parameters", expanded=False):
-    K_on = st.number_input("Antibiotic binding rate (K_on)", 0, 2000, 750, 1, on_change=input_changed)
-    K_off = st.number_input("Antibiotic unbinding rate (K_off)", 0.0, 0.1, 0.01, 0.001, format="%.3f", on_change=input_changed)
+    K_on = st.number_input("Antibiotic binding rate (K_on)", 0, 10000, 750, 10, on_change=input_changed)
+    K_off = st.number_input("Antibiotic unbinding rate (K_off)", 0.0, 100, 0.01, 0.001, format="%.3f", on_change=input_changed)
     K_D = st.number_input("Dissociation constant (K_D)", 0, 50000, 12000, 1, on_change=input_changed)
-    lambda_max = st.number_input("Maximum Lysis Rate (lambda_max)", 0.1, 2.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
+    lambda_max = st.number_input("Maximum Lysis Rate (lambda_max)", 0.1, 10.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
     K_A0 = st.number_input("Initial antibiotic constant (K_A0)", 0, 50, 10, 1, on_change=input_changed)
     n = st.number_input("Hill coefficient (n)", 1, 50, 20, 1, on_change=input_changed)
-    a = st.number_input("Baseline Lysis (a)", 0.0, 5.0, 3.0, 0.1, format="%.2f", on_change=input_changed)
-    b = st.number_input("Growth-dependent Lysis (b)", 0.0, 1.0, 0.1, 0.05, format="%.2f", on_change=input_changed)
+    a = st.number_input("Baseline Lysis (a)", 0.0, 10.0, 3.0, 0.1, format="%.2f", on_change=input_changed)
+    b = st.number_input("Growth-dependent Lysis (b)", 0.0, 10.0, 0.1, 0.05, format="%.2f", on_change=input_changed)
 
 # ------------------- Debounce Check ------------------- #
 while time.time() - st.session_state.last_change_time < DEBOUNCE_DELAY:
@@ -189,18 +189,6 @@ def int_to_superscript(n):
 if __name__ == "__main__":
     volume = [1e3, 1e4, 1e5, 1e6, 1e7]
     density = [0.005742, 0.001325, 0.000619, 0.000499, 0.000402]
-    mu_max = 0.7
-    lambda_max = 1
-    Y = 0.001
-    K_s = 2
-    S0 = 1
-    a = 3
-    b = 0.1
-    k_bind = 750
-    k_unbind = 0.01
-    K_D = 12000
-    K_A0 = 10
-    n = 20
     t = np.linspace(0, 24, 250)
     A_free0 = [0, 3.3, 10, 30]
 
@@ -212,7 +200,7 @@ if __name__ == "__main__":
     for model_func, model_name in zip(model_funcs, model_names):
         results = run_model_for_volumes(
             model_func, model_name, volume, density, A_free0, t,
-            mu_max=mu_max, K_s=K_s, Y=Y, k_bind=k_bind, k_unbind=k_unbind,
+            mu_max=mu_max, K_s=Ks, Y=Y, k_bind=K_on, k_unbind=K_off,
             lambda_max=lambda_max, K_D=K_D, n=n, S0=S0, a=a, b=b, K_A0=K_A0
         )
         volume_list = sorted(results['volume'].unique())
