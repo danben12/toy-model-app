@@ -54,6 +54,17 @@ with st.sidebar.expander("Antibiotic Parameters", expanded=False):
     a = st.number_input("Baseline Lysis (a)", 0.0, 10.0, 3.0, 0.1, format="%.2f", on_change=input_changed)
     b = st.number_input("Growth-dependent Lysis (b)", 0.0, 10.0, 0.1, 0.05, format="%.2f", on_change=input_changed)
 
+# Antibiotic concentration selection (single value)
+A_free0_value = st.sidebar.number_input(
+    "Antibiotic Concentration (A0)",
+    min_value=0.0,
+    max_value=100.0,
+    value=0.0,
+    step=1.0,
+    on_change=input_changed
+)
+A_free0 = [A_free0_value]
+
 # ------------------- Debounce Check ------------------- #
 while time.time() - st.session_state.last_change_time < DEBOUNCE_DELAY:
     time.sleep(0.1)
@@ -190,7 +201,6 @@ if __name__ == "__main__":
     volume = [1e3, 1e4, 1e5, 1e6, 1e7]
     density = [0.005742, 0.001325, 0.000619, 0.000499, 0.000402]
     t = np.linspace(0, 24, 250)
-    A_free0 = [0, 3.3, 10, 30]
 
     model_funcs = [effective_concentration_model, linear_Lysis_rate_model, combined_model]
     model_names = ["Effective Concentration", "Linear Lysis Rate", "Combined Model"]
@@ -234,7 +244,3 @@ if __name__ == "__main__":
 
     for p in plots:
         streamlit_bokeh(p, use_container_width=True, theme="streamlit")
-
-
-
-
