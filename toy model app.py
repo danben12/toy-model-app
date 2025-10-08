@@ -50,7 +50,7 @@ with st.sidebar.expander("Antibiotic Parameters", expanded=False):
     K_D = st.number_input("Dissociation constant (K_D)", 0, 50000, 12000, 1, on_change=input_changed)
     lambda_max = st.number_input("Maximum Lysis Rate (lambda_max)", 0.0, 10.0, 1.0, 0.1, format="%.2f", on_change=input_changed)
     K_A0 = st.number_input("Initial antibiotic constant (K_A0)", 0, 50, 10, 1, on_change=input_changed)
-    n = st.number_input("Hill coefficient (n)", 1, 50, 20, 1, on_change=input_changed)
+    n = st.number_input("Hill coefficient (n)", 1, 100, 20, 1, on_change=input_changed)
     a = st.number_input("Baseline Lysis (a)", 0.0, 10.0, 3.0, 0.1, format="%.2f", on_change=input_changed)
     b = st.number_input("Growth-dependent Lysis (b)", 0.0, 10.0, 0.1, 0.05, format="%.2f", on_change=input_changed)
 
@@ -244,3 +244,4 @@ if __name__ == "__main__":
 
     for p in plots:
         streamlit_bokeh(p, use_container_width=True, theme="streamlit")
+
